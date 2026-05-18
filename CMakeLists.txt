@@ -13,5 +13,5 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 add_executable(tobe src/main.cpp)
+target_include_directories(tobe PRIVATE include)
 target_link_libraries(tobe PRIVATE raylib)
-
