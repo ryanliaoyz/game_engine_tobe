@@ -15,7 +15,9 @@ private:
   std::unordered_map<Entity, T> data;
 
 public:
-  void add(Entity e, T component) { data.insert_or_assign(e, std::move(component)); }
+  void add(Entity e, T component) {
+    data.insert_or_assign(e, std::move(component));
+  }
 
   T *get(Entity e) {
     auto it = data.find(e);

@@ -4,5 +4,5 @@
 
 namespace tobe {
 using Entity = std::uint32_t;
-// TODO: add a no entity guard
+inline constexpr Entity null_entity = 0;
 } // namespace tobe
