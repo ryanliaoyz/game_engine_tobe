@@ -6,6 +6,7 @@
 #include <typeindex>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 namespace tobe {
 class World {
@@ -61,6 +62,15 @@ public:
 
   template <typename T> bool remove_component(Entity entity) {
     return get_store<T>().remove(entity);
+  }
+
+  template <typename... Ts> std::vector<Entity> view() const {
+    std::vector<Entity> ret;
+    for (auto &entity : alive) {
+      if ((has_component<Ts>(entity) && ...))
+        ret.push_back(entity);
+    }
+    return ret;
   }
 };
 } // namespace tobe
