@@ -1,27 +1,25 @@
-#include "world.h"
-#include "movement.h"
 #include "components.h"
-#include <iostream>
+#include "movement.h"
+#include "render.h"
+#include "world.h"
 
 int main() {
-    tobe::World world;
-    
-    auto e1 = world.create_entity();
-    world.add_component<tobe::Position>(e1, {0.0f, 0.0f});
-    world.add_component<tobe::Velocity>(e1, {1.0f, 2.0f});
-    
-    auto e2 = world.create_entity();
-    world.add_component<tobe::Position>(e2, {10.0f, 10.0f});
-    // e2 has no velocity — shouldn't move
-    
-    for (int tick = 0; tick < 3; ++tick) {
-        tobe::movement::update(world, 0.1f);
-        auto* p1 = world.get_component<tobe::Position>(e1);
-        auto* p2 = world.get_component<tobe::Position>(e2);
-        std::cout << "tick " << tick 
-                  << ": e1=(" << p1->x << "," << p1->y << ")"
-                  << " e2=(" << p2->x << "," << p2->y << ")\n";
-    }
-    
-    return 0;
+  tobe::World world;
+
+  auto e1 = world.create_entity();
+  world.add_component<tobe::Position>(e1, {100.0f, 100.0f});
+  world.add_component<tobe::Velocity>(e1, {30.0f, 20.0f});
+
+  auto e2 = world.create_entity();
+  world.add_component<tobe::Position>(e2, {400.0f, 225.0f});
+  // e2 has no velocity — should sit still
+
+  tobe::Renderer renderer;
+
+  while (!renderer.should_close()) {
+    tobe::movement::update(world, 1.0f / 60.0f);
+    tobe::render::update(world);
+  }
+
+  return 0;
 }
